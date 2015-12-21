@@ -2,10 +2,10 @@
 //Get the enchant.js game working
 
 //1 - Start enchant.js
-enchant();	//Export all the library classes gloablly,  
+enchant();	//Export all the library classes gloablly,
 			//allows you to use all classes from enchant.js
 
-//2 - On document load	//Invoke the function once the HTML document is doine loading. 
+//2 - On document load	//Invoke the function once the HTML document is doine loading.
 						//Initialize game insdie the function
 window.onload = function(){
 	//3 - Starting Point	//Creat an instance of game class
@@ -23,14 +23,13 @@ window.onload = function(){
 
 			var scene = new SceneGame();//instantiate a SceneGame object, and add it to the scene stack
 			//Start scene
-			game.pushScene(scene);//push the scene onto the game's scene stack, 
+			game.pushScene(scene);//push the scene onto the game's scene stack,
 								  //make it active scene
 	}
 	//7 - Start
 	game.start();
-	
 	//enchant.js comes with object-oriented framework(OOP)
-	//SceneGame, create SceneGame tha is a subclass of Scene, 
+	//SceneGame, create SceneGame tha is a subclass of Scene,
 	//so Scene is the superclass of SceneGame
 	var SceneGame = Class.create(Scene, {
 		//The main gameplay scene(Constructor of Scene)
@@ -39,7 +38,7 @@ window.onload = function(){
 
 			//(1) - Call superclass constructor, do initialization
 			Scene.apply(this);
-			//(2) - Access to the game singleton instance,assign the 
+			//(2) - Access to the game singleton instance,assign the
 			//singleton Game instance to the game variable for later use
 			game = Game.instance;
 			//(3) - Create child nodes
@@ -47,7 +46,7 @@ window.onload = function(){
 			label = new Label("Skeeing Mickey");
 			label = new Label('SCORE<br>0');
 			label.x = -50;
-			label.y = 32;        
+			label.y = 32;
 			label.color = 'black';
 			label.font = '25px strong';
 			label.textAlign = 'center';
@@ -56,7 +55,7 @@ window.onload = function(){
 			bg = new Sprite(1347, 760);//Create a Sprite node
 			bg.image = game.assets['res/BG.png'];//background image
 			bg.x = game.width/2 - bg.width/2
-			
+
 			mickey = new Mickey()//instantiate an instance of the Mickey class
 			//set the mickey's position
 			mickey.x = game.width/2 - mickey.width/2;
@@ -69,12 +68,12 @@ window.onload = function(){
 
 			//(4) - Add child nodes
 			//addChild: the node you add will become one of the scene's child nodes
-			//In enchant.js, the framework will draw a newly-added 
+			//In enchant.js, the framework will draw a newly-added
 			//node on top of those that were added previously.
 			this.addChild(bg);	//this refers to SceneGame	//add bg node to the scene
 			this.addChild(snowballgroup);
-			this.addChild(mickey);//add mickey to th screen, 
-								   //on top of the background, but under the label 
+			this.addChild(mickey);//add mickey to th screen,
+								   //on top of the background, but under the label
 			this.addChild(label);
 			//Touch listener
 			this.addEventListener(Event.TOUCH_START, this.handleTouchControl);//Touch/click Detection
@@ -82,7 +81,7 @@ window.onload = function(){
 			this.addEventListener(Event.ENTER_FRAME, this.update);//To make an snowball appear every three seconds
 			//Instance variables
 			this.generateSnowballTimer = 0;//timer to generate an snowball
-			//scoretimer	
+			//scoretimer
 			this.scoreTimer = 0;
 			this.score = 0;
 
@@ -123,7 +122,7 @@ window.onload = function(){
 			    var Snowball;
 			    Snowball = this.snowballgroup.childNodes[i];
 			    if (Snowball.intersect(this.mickey)){
-			        this.snowballgroup.removeChild(Snowball);        
+			        this.snowballgroup.removeChild(Snowball);
 			        break;
 			    }
 			}
@@ -144,23 +143,23 @@ window.onload = function(){
 			this.image = Game.instance.assets['res/mickeySheet.png'];
 			//(2) - Animate
 			this.animationDuration = 0;//timer for animation
-			//you tell the mickey to listen for the ENTER_FRAME event, 
+			//you tell the mickey to listen for the ENTER_FRAME event,
 			//and call a method named updateAnimation every time this event occurs
 			this.addEventListener(Event.ENTER_FRAME, this.updateAnimation);
 			//ENTER_FRAME is an event that is fired every frame
 		},
 
-		//For the ENTER_FRAME event, one item of information you can access 
-		//is the amount of time that has passed since the last frame. 
+		//For the ENTER_FRAME event, one item of information you can access
+		//is the amount of time that has passed since the last frame.
 		//This information can be accessed through the elapsed property.
 		updateAnimation: function(evt){
 			this.animationDuration += evt.elapsed * 0.001;
 			//The elapsed property stores time in milliseconds, so convert it to seconds
 			//Use the animationDuration variable to keep track of how much time has passed in seconds.
-			
-			//Mickey flaps his wings every 0.25 seconds.	
+
+			//Mickey flaps his wings every 0.25 seconds.
 			if (this.animationDuration >= 0.25) {
-				//Sprite node in enchant.js treats the image you assign as a sprite sheet. 
+				//Sprite node in enchant.js treats the image you assign as a sprite sheet.
 				//It will use the size you’ve given as its frame size, and assign an index number to each frame. (0,1)
 				//The index will start from 0, counting from left to right and top to bottom.
 				this.frame = (this.frame + 1) % 2;//change the frame between 0 and 1
@@ -192,7 +191,7 @@ window.onload = function(){
 			var game, distance;
 			game = Game.instance;
 			distance = 300;
-				
+
 
 			//The Math.random() function returns a floating-point, pseudo-random number in the range [0, 1)
 			this.rotationSpeed = Math.random() * 100 - 50;
@@ -216,8 +215,8 @@ window.onload = function(){
 			}
 		}
 	});
-	
-	// // SceneGameOver  
+
+	// // SceneGameOver
 	// var SceneGameOver = Class.create(Scene, {
 	//     initialize: function(score) {
 	//         var gameOverLabel, scoreLabel;
@@ -233,7 +232,7 @@ window.onload = function(){
 	// 		// Score label
 	// 		scoreLabel = new Label('SCORE<br>' + score);
 	// 		scoreLabel.x = 9;
-	// 		scoreLabel.y = 32;        
+	// 		scoreLabel.y = 32;
 	// 		scoreLabel.color = 'white';
 	// 		scoreLabel.font = '16px strong';
 	// 		scoreLabel.textAlign = 'center';
